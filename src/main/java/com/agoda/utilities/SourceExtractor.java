@@ -40,11 +40,16 @@ public class SourceExtractor {
     }
 
     private static String getOutputFilePath(String localOutputDirectory, URI uri) {
+        String outputFile = beautifyOutputFilename(uri);
+        return String.valueOf(Paths.get(localOutputDirectory, outputFile));
+    }
+
+    private static String beautifyOutputFilename(URI uri) {
         String outputFile = uri.getPath().replace('/', '-');
         if (outputFile.charAt(0) == '-') {
             outputFile = outputFile.substring(1);
         }
-        return String.valueOf(Paths.get(localOutputDirectory, outputFile));
+        return outputFile;
     }
 
 

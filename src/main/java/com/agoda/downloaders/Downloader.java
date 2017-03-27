@@ -9,6 +9,7 @@ import java.nio.channels.ReadableByteChannel;
 
 public abstract class Downloader implements Downloadable {
 
+    public static final int START_BUFFER_POSITION = 0;
     protected String downloadURL;
     protected String outputFilePath;
 
@@ -19,7 +20,7 @@ public abstract class Downloader implements Downloadable {
 
     protected void writeDataFromChannel(ReadableByteChannel readableByteChannel, String outputFilePath, long contentLength) throws IOException {
         try (FileOutputStream fileOutputStream = new FileOutputStream(outputFilePath)) {
-            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, contentLength);
+            fileOutputStream.getChannel().transferFrom(readableByteChannel, START_BUFFER_POSITION, contentLength);
         }
     }
 

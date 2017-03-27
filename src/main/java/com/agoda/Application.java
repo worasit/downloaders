@@ -1,3 +1,5 @@
+package com.agoda;
+
 import com.agoda.downloaders.Downloadable;
 import com.agoda.downloaders.DownloaderFactory;
 import com.agoda.models.Source;
@@ -23,6 +25,7 @@ public class Application {
         Application application = new Application();
         JCommander jCommander = new JCommander(application, args);
         application.run(jCommander);
+
     }
 
     public void run(JCommander jCommander) throws MalformedURLException, URISyntaxException {

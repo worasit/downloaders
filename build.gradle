@@ -15,3 +15,23 @@ dependencies {
     compile group: 'commons-cli', name: 'commons-cli', version: '1.2'
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.53'
 }
+
+test {
+    useJUnit()
+    testLogging.showStandardStreams = true
+    jvmArgs '-XX:MaxPermSize=256m'
+    beforeTest { descriptor ->
+        logger.lifecycle("Running test: " + descriptor)
+    }
+    onOutput { descriptor, event ->
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
+    }
+    reports {
+        junitXml.enabled = true
+        junitXml.destination = file('build/reports')
+        html.enabled = true
+    }
+}
+
+
+

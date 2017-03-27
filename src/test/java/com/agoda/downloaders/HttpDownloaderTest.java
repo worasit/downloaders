@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.channels.ReadableByteChannel;
 
@@ -40,17 +41,23 @@ public class HttpDownloaderTest {
         long contentLength = Long.MAX_VALUE;
 
         HttpDownloader httpDownloader = spy(new HttpDownloader(downloadURL, outputFilePath));
+        InputStream mockInputStream = mock(InputStream.class);
         URLConnection mockUrlConnection = mock(URLConnection.class);
         ReadableByteChannel mockReadableByteChannel = mock(ReadableByteChannel.class);
+
+
+        doReturn(mockInputStream)
+                .when(mockUrlConnection, "getInputStream");
+        doReturn(contentLength)
+                .when(mockUrlConnection, "getContentLengthLong");
 
         doReturn(mockUrlConnection)
                 .when(httpDownloader, "getUrlConnection", anyString());
         doReturn(mockReadableByteChannel)
-                .when(httpDownloader, "establishChannel", any(URLConnection.class));
+                .when(httpDownloader, "establishChannel", any(InputStream.class));
         doNothing()
                 .when(httpDownloader, "writeDataFromChannel", any(ReadableByteChannel.class), anyString(), anyLong());
-        doReturn(contentLength)
-                .when(mockUrlConnection, "getContentLengthLong");
+
 
         // Act
         httpDownloader.download();
@@ -60,9 +67,11 @@ public class HttpDownloaderTest {
                 .invoke("getUrlConnection", downloadURL);
 
         verifyPrivate(httpDownloader, times(1))
-                .invoke("establishChannel", mockUrlConnection);
+                .invoke("establishChannel", mockInputStream);
 
         verifyPrivate(httpDownloader, times(1))
                 .invoke("writeDataFromChannel", mockReadableByteChannel, outputFilePath, contentLength);
     }
+
+
 }

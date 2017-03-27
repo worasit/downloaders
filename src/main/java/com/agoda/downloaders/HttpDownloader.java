@@ -3,6 +3,7 @@ package com.agoda.downloaders;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
@@ -17,7 +18,7 @@ public class HttpDownloader extends Downloader {
     @Override
     public void download() throws IOException {
         URLConnection urlConnection = getUrlConnection(this.downloadURL);
-        try (ReadableByteChannel readableByteChannel = establishChannel(urlConnection)) {
+        try (ReadableByteChannel readableByteChannel = establishChannel(urlConnection.getInputStream())) {
             writeDataFromChannel(readableByteChannel, this.outputFilePath, urlConnection.getContentLengthLong());
         }
     }
@@ -28,8 +29,8 @@ public class HttpDownloader extends Downloader {
         }
     }
 
-    private ReadableByteChannel establishChannel(URLConnection urlConnection) throws IOException {
-        return Channels.newChannel(urlConnection.getInputStream());
+    private ReadableByteChannel establishChannel(InputStream inputStream) throws IOException {
+        return Channels.newChannel(inputStream);
     }
 
     private URLConnection getUrlConnection(String downloadURL) throws IOException {

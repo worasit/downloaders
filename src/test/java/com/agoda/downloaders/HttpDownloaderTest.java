@@ -58,7 +58,6 @@ public class HttpDownloaderTest {
         doNothing()
                 .when(httpDownloader, "writeDataFromChannel", any(ReadableByteChannel.class), anyString(), anyLong());
 
-
         // Act
         httpDownloader.download();
 

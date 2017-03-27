@@ -18,15 +18,15 @@ public class Application {
     private boolean help;
     @Parameter(names = {"--sources"}, required = true, description = "Comma-separated list of sources URLs to be run (e.g. http://my.file.com/file,ftp://other.file.com/other,sftp://and.also.this/ending)")
     String sourcesUrls;
-    @Parameter(names = {"--out"}, required = true, description = "Output directory to save all downloaded files")
+    @Parameter(names = {"--out"}, required = true, description = "Local output directory to save all downloaded files")
     String outputDirectoryPath;
-    @Parameter(names = {"--ftpUser"}, description = "FTP user which has a permission to access, and download sources")
+    @Parameter(names = {"--ftpUser"}, description = "FTP user which has a permission to access, and download files")
     String ftpUser;
-    @Parameter(names = {"--ftpPassword"}, description = "FTP password related to the FTP user")
+    @Parameter(names = {"--ftpPassword"}, description = "FTP password")
     String ftpPassword;
-    @Parameter(names = {"--sftpUser"}, description = "SFTP user which has a permission to access, and download sources")
+    @Parameter(names = {"--sftpUser"}, description = "SFTP user which has a permission to access, and download files")
     String sftpUser;
-    @Parameter(names = {"--sftpPassword"}, description = "SFTP password related to the FTP user")
+    @Parameter(names = {"--sftpPassword"}, description = "SFTP password")
     String sftpPassword;
 
     public static void main(String[] args) throws Exception {

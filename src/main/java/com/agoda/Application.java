@@ -20,12 +20,19 @@ public class Application {
     String sourcesUrls;
     @Parameter(names = {"--out"}, required = true, description = "Output directory to save all downloaded files")
     String outputDirectoryPath;
+    @Parameter(names = {"--ftpUser"}, description = "FTP user which has a permission to access, and download sources")
+    String ftpUser;
+    @Parameter(names = {"--ftpPassword"}, description = "FTP password related to the FTP user")
+    String ftpPassword;
+    @Parameter(names = {"--sftpUser"}, description = "SFTP user which has a permission to access, and download sources")
+    String sftpUser;
+    @Parameter(names = {"--sftpPassword"}, description = "SFTP password related to the FTP user")
+    String sftpPassword;
 
     public static void main(String[] args) throws Exception {
         Application application = new Application();
         JCommander jCommander = new JCommander(application, args);
         application.run(jCommander);
-
     }
 
     public void run(JCommander jCommander) throws MalformedURLException, URISyntaxException {

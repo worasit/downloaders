@@ -28,7 +28,7 @@ public class FtpDownloaderTest {
         ftpDownloader = new FtpDownloader(downloadURL, outputFilePath);
 
         // Act
-        ftpDownloader.download();
+//        ftpDownloader.download();
 
 
         // Assert

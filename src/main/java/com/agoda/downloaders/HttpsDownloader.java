@@ -19,7 +19,7 @@ public class HttpsDownloader extends HttpDownloader {
     }
 
     private void trustAllCertificate() {
-        TrustManager[] trustManagers = {
+        TrustManager[] trustManagers = new TrustManager[]{
                 new X509TrustManager() {
                     public X509Certificate[] getAcceptedIssuers() {
                         return null;

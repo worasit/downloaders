@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/agoda-file-download.iml" filepath="$PROJECT_DIR$/.idea/modules/agoda-file-download.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/agoda-file-download_main.iml" filepath="$PROJECT_DIR$/.idea/modules/agoda-file-download_main.iml" group="agoda-file-download" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/agoda-file-download_test.iml" filepath="$PROJECT_DIR$/.idea/modules/agoda-file-download_test.iml" group="agoda-file-download" />
+    </modules>
+  </component>
+</project>

@@ -1,6 +1,4 @@
 group 'agoda-file-download'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
@@ -33,5 +31,15 @@ test {
     }
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.agoda.Application'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    baseName 'agoda-downloader'
+    version = '0.1.0'
+}
 
 

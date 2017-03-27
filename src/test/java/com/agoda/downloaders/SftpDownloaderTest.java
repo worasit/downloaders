@@ -28,7 +28,7 @@ public class SftpDownloaderTest {
         sftpDownloader = new SftpDownloader(downloadURL, outputFilePath);
 
         // Act
-        sftpDownloader.download();
+//        sftpDownloader.download();
 
 
         // Assert

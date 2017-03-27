@@ -10,29 +10,32 @@ import java.nio.channels.ReadableByteChannel;
 
 public class HttpDownloader extends Downloader {
 
-
     public HttpDownloader(String downloadURL, String outputFilePath) {
         super(downloadURL, outputFilePath);
     }
 
     @Override
     public void download() throws IOException {
-
-        ReadableByteChannel readableByteChannel = null;
-        FileOutputStream fileOutputStream = null;
-
-        try {
-            URL url = new URL(this.downloadURL);
-            URLConnection urlConnection = url.openConnection();
-            urlConnection.setRequestProperty("User-Agent", "");
-            readableByteChannel = Channels.newChannel(urlConnection.getInputStream());
-            fileOutputStream = new FileOutputStream(this.outputFilePath);
-            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, urlConnection.getContentLengthLong());
-        } finally {
-            readableByteChannel.close();
-            fileOutputStream.close();
+        URLConnection urlConnection = getUrlConnection(this.downloadURL);
+        try (ReadableByteChannel readableByteChannel = establishChannel(urlConnection)) {
+            writeDataFromChannel(readableByteChannel, this.outputFilePath, urlConnection.getContentLengthLong());
         }
+    }
 
+    private void writeDataFromChannel(ReadableByteChannel readableByteChannel, String outputFilePath, long contentLength) throws IOException {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(outputFilePath)) {
+            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, contentLength);
+        }
+    }
 
+    private ReadableByteChannel establishChannel(URLConnection urlConnection) throws IOException {
+        return Channels.newChannel(urlConnection.getInputStream());
+    }
+
+    private URLConnection getUrlConnection(String downloadURL) throws IOException {
+        URL url = new URL(downloadURL);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "");
+        return urlConnection;
     }
 }

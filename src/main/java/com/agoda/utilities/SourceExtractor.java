@@ -45,7 +45,7 @@ public class SourceExtractor {
     }
 
     private static String beautifyOutputFilename(URI uri) {
-        String outputFile = uri.getPath().replace('/', '-');
+        String outputFile = uri.getPath().replace('/', '-').replaceAll(" ", "");
         if (outputFile.charAt(0) == '-') {
             outputFile = outputFile.substring(1);
         }

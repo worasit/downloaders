@@ -4,6 +4,7 @@ package com.agoda.downloaders;
 import com.jcraft.jsch.*;
 
 import java.io.*;
+import java.net.URI;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
@@ -28,6 +29,9 @@ public class SftpDownloader extends Downloader {
         FileOutputStream fileOutputStream = null;
 
         try {
+
+            URI uri = new URI(this.downloadURL);
+
             JSch jsch = new JSch();
             session = jsch.getSession(SFTPUSER, SFTPHOST, SFTPPORT);
             session.setPassword(SFTPPASS);
@@ -38,10 +42,12 @@ public class SftpDownloader extends Downloader {
             channel = session.openChannel("sftp");
             channel.connect();
             channelSftp = (ChannelSftp) channel;
-            channelSftp.cd("/Users/worasitdaimongkol/FTP");
 
 
-            readableByteChannel = Channels.newChannel(channelSftp.get("captain.mkv"));
+
+            InputStream inputStream = channelSftp.get(uri.getPath());
+
+            readableByteChannel = Channels.newChannel(inputStream);
             fileOutputStream = new FileOutputStream(this.outputFilePath);
             fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
 
@@ -51,6 +57,9 @@ public class SftpDownloader extends Downloader {
         } finally {
             readableByteChannel.close();
             fileOutputStream.close();
+            channelSftp.disconnect();
+            channel.disconnect();
+            session.disconnect();
         }
 
     }

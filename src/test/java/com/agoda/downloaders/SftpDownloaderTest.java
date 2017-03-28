@@ -23,7 +23,7 @@ public class SftpDownloaderTest {
     public void download() throws Exception {
         // Arrange
         SftpDownloader sftpDownloader = null;
-        String downloadURL = "sftp://agoda:1234@localhost/captain.mkv";
+        String downloadURL = "sftp://agoda:1234@localhost/Users/worasitdaimongkol/FTP/captain.mkv";
         String outputFilePath = "/Users/worasitdaimongkol/xxx/captain.mkv";
         sftpDownloader = new SftpDownloader(downloadURL, outputFilePath);
 

@@ -26,7 +26,7 @@ public class DownloaderFactoryTest {
         Downloadable downloader = downloaderFactory.getDownloader(fakeSource);
 
         // Assert
-        Assert.assertTrue(downloader instanceof HttpDownloader);
+        Assert.assertTrue(downloader.getClass() == HttpDownloader.class);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class DownloaderFactoryTest {
         Downloadable downloader = downloaderFactory.getDownloader(fakeSource);
 
         // Assert
-        Assert.assertTrue(downloader instanceof HttpsDownloader);
+        Assert.assertTrue(downloader.getClass() == HttpsDownloader.class);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class DownloaderFactoryTest {
         Downloadable downloader = downloaderFactory.getDownloader(fakeSource);
 
         // Assert
-        Assert.assertTrue(downloader instanceof FtpDownloader);
+        Assert.assertTrue(downloader.getClass() == FtpDownloader.class);
     }
 
     @Test
@@ -83,6 +83,6 @@ public class DownloaderFactoryTest {
         Downloadable downloader = downloaderFactory.getDownloader(fakeSource);
 
         // Assert
-        Assert.assertTrue(downloader instanceof SftpDownloader);
+        Assert.assertTrue(downloader.getClass() == SftpDownloader.class);
     }
 }

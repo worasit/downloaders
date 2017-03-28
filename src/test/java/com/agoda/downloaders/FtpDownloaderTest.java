@@ -23,7 +23,7 @@ public class FtpDownloaderTest {
     public void download() throws Exception {
         // Arrange
         FtpDownloader ftpDownloader = null;
-        String downloadURL = "ftp://agoda:1234@worasit.local./captain.mkv";
+        String downloadURL = "ftp://agoda:1234@localhost/Users/worasitdaimongkol/FTP/captain.mkv";
         String outputFilePath = "/Users/worasitdaimongkol/xxx/captain.mkv";
         ftpDownloader = new FtpDownloader(downloadURL, outputFilePath);
 

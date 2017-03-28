@@ -1,6 +1,7 @@
 package com.agoda.downloaders;
 
 
+import com.agoda.source.FtpSource;
 import com.agoda.source.Source;
 
 public class DownloaderFactory {
@@ -11,9 +12,11 @@ public class DownloaderFactory {
             case HTTPS:
                 return new HttpsDownloader(source.sourceURL, source.outputFilePath);
             case FTP:
-                return new FtpDownloader(source.sourceURL, source.outputFilePath);
+                FtpSource ftpSource = (FtpSource) source;
+                return new FtpDownloader(ftpSource.sourceURL, ftpSource.outputFilePath, ftpSource.user, ftpSource.password);
             case SFTP:
-                return new SftpDownloader(source.sourceURL, source.outputFilePath);
+                FtpSource sftpSource = (FtpSource) source;
+                return new SftpDownloader(sftpSource.sourceURL, sftpSource.outputFilePath, sftpSource.user, sftpSource.password);
             default:
                 throw new TypeNotPresentException(Protocol.class.getTypeName(), new Throwable("Download protocol is not supported."));
         }

@@ -11,9 +11,11 @@ public class SftpDownloaderTest {
         SftpDownloader sftpDownloader = null;
         String downloadURL = "sftp://and.also.this/ending.txt";
         String outputFilePath = "ending.txt";
+        String user = "agoda";
+        String password = "1234";
 
         // Act
-        sftpDownloader = new SftpDownloader(downloadURL, outputFilePath);
+        sftpDownloader = new SftpDownloader(downloadURL, outputFilePath, user, password);
 
         // Assert
         Assert.assertTrue(sftpDownloader instanceof Downloader);
@@ -25,7 +27,9 @@ public class SftpDownloaderTest {
         SftpDownloader sftpDownloader = null;
         String downloadURL = "sftp://agoda:1234@localhost/Users/worasitdaimongkol/FTP/captain.mkv";
         String outputFilePath = "/Users/worasitdaimongkol/xxx/captain.mkv";
-        sftpDownloader = new SftpDownloader(downloadURL, outputFilePath);
+        String user = "agoda";
+        String password = "1234";
+        sftpDownloader = new SftpDownloader(downloadURL, outputFilePath, user, password);
 
         // Act
 //        sftpDownloader.download();

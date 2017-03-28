@@ -10,11 +10,11 @@ import java.nio.channels.ReadableByteChannel;
 public abstract class Downloader implements Downloadable {
 
     public static final int START_BUFFER_POSITION = 0;
-    protected String downloadURL;
+    protected String sourceURL;
     protected String outputFilePath;
 
-    public Downloader(String downloadURL, String outputFilePath) {
-        this.downloadURL = downloadURL;
+    public Downloader(String sourceURL, String outputFilePath) {
+        this.sourceURL = sourceURL;
         this.outputFilePath = outputFilePath;
     }
 

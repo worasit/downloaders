@@ -10,8 +10,13 @@ import java.nio.channels.ReadableByteChannel;
 
 public class FtpDownloader extends Downloader {
 
-    public FtpDownloader(String downloadURL, String outputFilePath) {
+    protected String user;
+    protected String password;
+
+    public FtpDownloader(String downloadURL, String outputFilePath, String user, String password) {
         super(downloadURL, outputFilePath);
+        this.user = user;
+        this.password = password;
     }
 
     @Override
@@ -21,7 +26,7 @@ public class FtpDownloader extends Downloader {
         FileOutputStream fileOutputStream = null;
 
         try {
-            URL url = new URL(this.downloadURL);
+            URL url = new URL(this.sourceURL);
             URLConnection urlConnection = url.openConnection();
             readableByteChannel = Channels.newChannel(urlConnection.getInputStream());
             fileOutputStream = new FileOutputStream(this.outputFilePath);

@@ -37,7 +37,6 @@ public class SftpDownloader extends FtpDownloader {
             channelSftp.disconnect();
             session.disconnect();
         }
-
     }
 
     private InputStream getInputStream(ChannelSftp channelSftp) throws URISyntaxException, SftpException {

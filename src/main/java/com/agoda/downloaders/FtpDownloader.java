@@ -4,12 +4,14 @@ package com.agoda.downloaders;
 import com.agoda.source.FtpSource;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import sun.net.ftp.FtpLoginException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -38,8 +40,9 @@ public class FtpDownloader extends Downloader {
             FTPClient ftpClient = connectToFtpServer(this.host, this.user, this.password);
             URI uri = new URI(this.sourceURL);
             ftpClient.enterLocalPassiveMode();
-            ftpClient.changeWorkingDirectory(uri.getPath());
-            FTPFile[] ftpFiles = ftpClient.listFiles();
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            InputStream inputStream = ftpClient.retrieveFileStream(uri.getPath());
+            this.writeStreamData(inputStream, Long.MAX_VALUE);
         }
 
     }

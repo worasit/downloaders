@@ -1,4 +1,4 @@
-package com.agoda.models;
+package com.agoda.source;
 
 
 import com.agoda.downloaders.Protocol;

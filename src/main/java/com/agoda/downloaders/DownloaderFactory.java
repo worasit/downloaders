@@ -1,7 +1,7 @@
 package com.agoda.downloaders;
 
 
-import com.agoda.models.Source;
+import com.agoda.source.Source;
 
 public class DownloaderFactory {
     public Downloadable getDownloader(Source source) throws TypeNotPresentException {

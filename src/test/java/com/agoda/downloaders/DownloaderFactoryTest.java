@@ -1,12 +1,10 @@
 package com.agoda.downloaders;
 
-import com.agoda.models.Source;
+import com.agoda.source.Source;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.nio.file.Paths;
-
-import static org.junit.Assert.*;
 
 
 public class DownloaderFactoryTest {

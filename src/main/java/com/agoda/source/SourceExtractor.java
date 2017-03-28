@@ -1,8 +1,7 @@
-package com.agoda.utilities;
+package com.agoda.source;
 
 
 import com.agoda.downloaders.Protocol;
-import com.agoda.models.Source;
 
 import java.net.MalformedURLException;
 import java.net.URI;

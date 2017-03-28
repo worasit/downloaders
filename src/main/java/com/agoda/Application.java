@@ -2,8 +2,8 @@ package com.agoda;
 
 import com.agoda.downloaders.Downloadable;
 import com.agoda.downloaders.DownloaderFactory;
-import com.agoda.models.Source;
-import com.agoda.utilities.SourceExtractor;
+import com.agoda.source.Source;
+import com.agoda.source.SourceExtractor;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 

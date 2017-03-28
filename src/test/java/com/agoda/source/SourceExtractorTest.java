@@ -1,7 +1,6 @@
-package com.agoda.utilities;
+package com.agoda.source;
 
 import com.agoda.downloaders.Protocol;
-import com.agoda.models.Source;
 import org.junit.Assert;
 import org.junit.Test;
 

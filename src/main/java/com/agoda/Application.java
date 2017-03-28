@@ -18,7 +18,7 @@ public class Application {
 
     @Parameter(names = "--help", help = true)
     private boolean help;
-    @Parameter(names = {"--sources"}, required = true, description = "Comma-separated list of sources URLs to be run (e.g. http://my.file.com/file,ftp://other.file.com/other,sftp://and.also.this/ending)")
+    @Parameter(names = {"--sources"}, required = true, description = "Comma-separated list of sources URLs to be run (e.g. http://my.file.com/file,ftp://other.file.com/other,sftp://and.also.this/ending,sftp://fakeUser:fakePassword@google.com/test.txt)")
     String sourcesURLs;
     @Parameter(names = {"--out"}, required = true, description = "Local output directory to save all downloaded files")
     String outputDirectoryPath;

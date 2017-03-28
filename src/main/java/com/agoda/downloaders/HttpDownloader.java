@@ -6,7 +6,6 @@ import com.agoda.source.Source;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.channels.ReadableByteChannel;
 
 public class HttpDownloader extends Downloader {
 
@@ -17,9 +16,7 @@ public class HttpDownloader extends Downloader {
     @Override
     public void download() throws IOException {
         URLConnection urlConnection = getUrlConnection(this.sourceURL);
-        try (ReadableByteChannel readableByteChannel = establishChannel(urlConnection.getInputStream())) {
-            writeDataFromChannel(readableByteChannel, this.outputFilePath, urlConnection.getContentLengthLong());
-        }
+        this.writeStreamData(urlConnection.getInputStream(), urlConnection.getContentLengthLong());
     }
 
     private URLConnection getUrlConnection(String downloadURL) throws IOException {

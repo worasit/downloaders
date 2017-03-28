@@ -11,13 +11,18 @@ import java.nio.channels.ReadableByteChannel;
 
 public abstract class Downloader implements Downloadable {
 
-    public static final int START_BUFFER_POSITION = 0;
+    protected static final int START_BUFFER_POSITION = 0;
     protected String sourceURL;
     protected String outputFilePath;
 
     public Downloader(Source source) {
         this.sourceURL = source.sourceURL;
         this.outputFilePath = source.outputFilePath;
+    }
+
+    public void writeStreamData(InputStream inputStream, long contentLength) throws IOException {
+        ReadableByteChannel readableByteChannel = establishChannel(inputStream);
+        writeDataFromChannel(readableByteChannel, this.outputFilePath, contentLength);
     }
 
     protected void writeDataFromChannel(ReadableByteChannel readableByteChannel, String outputFilePath, long contentLength) throws IOException {

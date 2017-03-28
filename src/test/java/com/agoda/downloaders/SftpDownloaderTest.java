@@ -9,7 +9,7 @@ public class SftpDownloaderTest {
     @Test
     public void should_be_able_to_download_files() throws Exception {
         // Arrange
-        SftpDownloader sftpDownloader = null;
+        SftpDownloader sftpDownloader;
         String downloadURL = "sftp://and.also.this/ending.txt";
         String outputFilePath = "ending.txt";
         String host = "localhost";
@@ -27,18 +27,17 @@ public class SftpDownloaderTest {
     @Test
     public void download() throws Exception {
         // Arrange
-        SftpDownloader sftpDownloader = null;
+        SftpDownloader sftpDownloader;
         String downloadURL = "sftp://agoda:1234@localhost/Users/worasitdaimongkol/FTP/captain.mkv";
         String outputFilePath = "/Users/worasitdaimongkol/xxx/captain.mkv";
         String host = "localhost";
         String user = "agoda";
         String password = "1234";
         FtpSource sftpSource = new FtpSource(Protocol.SFTP, downloadURL, outputFilePath, host, user, password);
-
         sftpDownloader = new SftpDownloader(sftpSource);
 
         // Act
-//        sftpDownloader.download();
+        sftpDownloader.download();
 
 
         // Assert

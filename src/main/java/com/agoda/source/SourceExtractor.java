@@ -14,8 +14,9 @@ import java.util.logging.Logger;
 
 public class SourceExtractor {
 
-
-    public static List<Source> extract(String sources, String localOutputDirectory) throws MalformedURLException, URISyntaxException {
+    public static List<Source> extract(String sources, String localOutputDirectory,
+                                       String ftpUser, String ftpPassword,
+                                       String sftpUser, String sftpPassword) throws MalformedURLException, URISyntaxException {
 
         String separator = ",";
         List<Source> extractedSources = new ArrayList<>();
@@ -23,13 +24,8 @@ public class SourceExtractor {
 
         for (String sourceURL : sourceURLs) {
             if (isValidURL(sourceURL)) {
-
-                URI uri = new URI(sourceURL);
-                Protocol protocol = getSourceProtocol(uri.getScheme());
-                String outputFilePath = getOutputFilePath(localOutputDirectory, uri);
-                Source extractedSource = new Source(protocol, sourceURL, outputFilePath);
+                Source extractedSource = buildSourceObject(sourceURL, localOutputDirectory, ftpUser, ftpPassword, sftpUser, sftpPassword);
                 extractedSources.add(extractedSource);
-
             } else {
                 Logger.getGlobal().info(MessageFormat.format("The {0} URL is not valid", sourceURL));
             }
@@ -38,19 +34,38 @@ public class SourceExtractor {
         return extractedSources;
     }
 
-    private static String getOutputFilePath(String localOutputDirectory, URI uri) {
-        String outputFile = beautifyOutputFilename(uri);
-        return String.valueOf(Paths.get(localOutputDirectory, outputFile));
-    }
 
-    private static String beautifyOutputFilename(URI uri) {
-        String outputFile = uri.getPath().replace('/', '-').replaceAll(" ", "");
-        if (outputFile.charAt(0) == '-') {
-            outputFile = outputFile.substring(1);
+    private static Source buildSourceObject(String sourceURL, String localOutputDirectory,
+                                            String ftpUser, String ftpPassword,
+                                            String sftpUser, String sftpPassword) throws URISyntaxException {
+
+        URI uri = new URI(sourceURL);
+        String protocol = uri.getScheme();
+        String outputFilePath = getOutputFilePath(localOutputDirectory, uri.getPath());
+        String host = uri.getHost();
+        String userInfo = uri.getUserInfo();
+
+        switch (protocol) {
+            case "http":
+                return new Source(Protocol.HTTP, sourceURL, outputFilePath);
+            case "https":
+                return new Source(Protocol.HTTPS, sourceURL, outputFilePath);
+            case "ftp":
+                return new FtpSource(Protocol.FTP, sourceURL, outputFilePath, host, getUser(userInfo, ftpUser), getPassword(userInfo, ftpPassword));
+            case "sftp":
+                return new FtpSource(Protocol.SFTP, sourceURL, outputFilePath, host, getUser(userInfo, sftpUser), getPassword(userInfo, sftpPassword));
+            default:
+                throw new EnumConstantNotPresentException(Protocol.class, protocol);
         }
-        return outputFile;
     }
 
+    private static String getUser(String userInfo, String user) {
+        return (userInfo != null) ? userInfo.split(":")[0] : user;
+    }
+
+    private static String getPassword(String userInfo, String password) {
+        return (userInfo != null) ? userInfo.split(":")[1] : password;
+    }
 
     private static boolean isValidURL(String urlString) {
         try {
@@ -61,19 +76,17 @@ public class SourceExtractor {
         }
     }
 
-    private static Protocol getSourceProtocol(String protocol) {
-        switch (protocol) {
-            case "http":
-                return Protocol.HTTP;
-            case "https":
-                return Protocol.HTTPS;
-            case "ftp":
-                return Protocol.FTP;
-            case "sftp":
-                return Protocol.SFTP;
-            default:
-                throw new EnumConstantNotPresentException(Protocol.class, protocol);
+    private static String getOutputFilePath(String localOutputDirectory, String filePath) {
+        String outputFile = beautifyOutputFilename(filePath);
+        return String.valueOf(Paths.get(localOutputDirectory, outputFile));
+    }
+
+    private static String beautifyOutputFilename(String filePath) {
+        String outputFile = filePath.replace('/', '-').replaceAll(" ", "");
+        if (outputFile.charAt(0) == '-') {
+            outputFile = outputFile.substring(1);
         }
+        return outputFile;
     }
 
 

@@ -2,9 +2,12 @@ package com.agoda.downloaders;
 
 
 import com.agoda.source.FtpSource;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
@@ -25,7 +28,7 @@ public class FtpDownloader extends Downloader {
     }
 
     @Override
-    public void download() throws IOException {
+    public void download() throws IOException, URISyntaxException, SftpException, JSchException {
 
         ReadableByteChannel readableByteChannel = null;
         FileOutputStream fileOutputStream = null;

@@ -2,66 +2,69 @@ package com.agoda.downloaders;
 
 
 import com.agoda.source.FtpSource;
+import com.jcraft.jsch.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Properties;
 
 public class SftpDownloader extends FtpDownloader {
 
-    public SftpDownloader(FtpSource ftpSource) {
-        super(ftpSource);
+    private static final int SFTP_PORT = 22;
+
+    public SftpDownloader(FtpSource source) {
+        super(source);
     }
 
-//    public SftpDownloader(String downloadURL, String outputFilePath) {
-//        super(downloadURL, outputFilePath);
-//    }
-//
-//    @Override
-//    public void download() throws IOException {
-//
-//        String SFTPHOST = "localhost";
-//        int SFTPPORT = 22;
-//        String SFTPUSER = "agoda";
-//        String SFTPPASS = "1234";
-//
-//        Session session = null;
-//        Channel channel = null;
-//        ChannelSftp channelSftp = null;
-//        ReadableByteChannel readableByteChannel = null;
-//        FileOutputStream fileOutputStream = null;
-//
-//        try {
-//
-//            URI uri = new URI(this.sourceURL);
-//
-//            JSch jsch = new JSch();
-//            session = jsch.getSession(SFTPUSER, SFTPHOST, SFTPPORT);
-//            session.setPassword(SFTPPASS);
-//            java.util.Properties config = new java.util.Properties();
-//            config.put("StrictHostKeyChecking", "no");
-//            session.setConfig(config);
-//            session.connect();
-//            channel = session.openChannel("sftp");
-//            channel.connect();
-//            channelSftp = (ChannelSftp) channel;
-//
-//
-//
-//            InputStream inputStream = channelSftp.get(uri.getPath());
-//
-//            readableByteChannel = Channels.newChannel(inputStream);
-//            fileOutputStream = new FileOutputStream(this.outputFilePath);
-//            fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-//
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        } finally {
-//            readableByteChannel.close();
-//            fileOutputStream.close();
-//            channelSftp.disconnect();
-//            channel.disconnect();
-//            session.disconnect();
-//        }
-//
-//    }
+
+    @Override
+    public void download() throws IOException, URISyntaxException, SftpException, JSchException {
+
+        Session session = null;
+        ChannelSftp channelSftp = null;
+
+        try {
+
+            Properties config = getSessionConfiguration();
+            session = establishSession(config);
+            channelSftp = establishSftpChannel(session);
+            InputStream inputStream = getInputStream(channelSftp);
+            this.writeStreamData(inputStream, Long.MAX_VALUE);
+
+        } finally {
+            channelSftp.disconnect();
+            session.disconnect();
+        }
+
+    }
+
+    private InputStream getInputStream(ChannelSftp channelSftp) throws URISyntaxException, SftpException {
+        URI uri = new URI(this.sourceURL);
+        return channelSftp.get(uri.getPath());
+    }
+
+    private ChannelSftp establishSftpChannel(Session session) throws JSchException {
+        Channel channel = session.openChannel("sftp");
+        channel.connect();
+        return (ChannelSftp) channel;
+    }
+
+    private Session establishSession(Properties config) throws JSchException {
+        JSch jsch = new JSch();
+        Session session = jsch.getSession(this.user, this.host, SFTP_PORT);
+        session.setPassword(this.password);
+        session.setConfig(config);
+        session.connect();
+        return session;
+    }
+
+    private Properties getSessionConfiguration() {
+        Properties config = new Properties();
+        config.put("StrictHostKeyChecking", "no");
+        return config;
+    }
 
 
 }

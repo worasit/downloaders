@@ -1,5 +1,6 @@
 package com.agoda.downloaders;
 
+import com.agoda.source.Source;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,9 +26,10 @@ public class HttpDownloaderTest {
         HttpDownloader httpDownloader = null;
         String downloadURL = "http://my.file.com/file.txt";
         String outputFilePath = "file.txt";
+        Source source = new Source(Protocol.HTTP, downloadURL, outputFilePath);
 
         // Act
-        httpDownloader = new HttpDownloader(downloadURL, outputFilePath);
+        httpDownloader = new HttpDownloader(source);
 
         // Assert
         Assert.assertTrue(httpDownloader instanceof Downloader);
@@ -39,8 +41,10 @@ public class HttpDownloaderTest {
         String downloadURL = "http://my.file.com/file.txt";
         String outputFilePath = "file.txt";
         long contentLength = Long.MAX_VALUE;
+        Source source = new Source(Protocol.HTTP, downloadURL, outputFilePath);
 
-        HttpDownloader httpDownloader = spy(new HttpDownloader(downloadURL, outputFilePath));
+
+        HttpDownloader httpDownloader = spy(new HttpDownloader(source));
         InputStream mockInputStream = mock(InputStream.class);
         URLConnection mockUrlConnection = mock(URLConnection.class);
         ReadableByteChannel mockReadableByteChannel = mock(ReadableByteChannel.class);

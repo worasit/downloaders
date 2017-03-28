@@ -1,6 +1,8 @@
 package com.agoda.downloaders;
 
 
+import com.agoda.source.Source;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -8,8 +10,8 @@ import java.nio.channels.ReadableByteChannel;
 
 public class HttpDownloader extends Downloader {
 
-    public HttpDownloader(String downloadURL, String outputFilePath) {
-        super(downloadURL, outputFilePath);
+    public HttpDownloader(Source source) {
+        super(source);
     }
 
     @Override

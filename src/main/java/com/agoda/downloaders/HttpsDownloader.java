@@ -1,5 +1,7 @@
 package com.agoda.downloaders;
 
+import com.agoda.source.Source;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -10,8 +12,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 public class HttpsDownloader extends HttpDownloader {
-    public HttpsDownloader(String downloadURL, String outputFilePath) {
-        super(downloadURL, outputFilePath);
+
+
+    public HttpsDownloader(Source source) {
+        super(source);
     }
 
     @Override
@@ -38,19 +42,19 @@ public class HttpsDownloader extends HttpDownloader {
 
     private TrustManager[] initTrustManagers() {
         return new TrustManager[]{
-                    new X509TrustManager() {
-                        public X509Certificate[] getAcceptedIssuers() {
-                            return null;
-                        }
-
-                        public void checkClientTrusted(
-                                X509Certificate[] certs, String authType) {
-                        }
-
-                        public void checkServerTrusted(
-                                X509Certificate[] certs, String authType) {
-                        }
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return null;
                     }
-            };
+
+                    public void checkClientTrusted(
+                            X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(
+                            X509Certificate[] certs, String authType) {
+                    }
+                }
+        };
     }
 }

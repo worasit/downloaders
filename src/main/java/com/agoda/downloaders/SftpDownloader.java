@@ -1,10 +1,12 @@
 package com.agoda.downloaders;
 
 
+import com.agoda.source.FtpSource;
+
 public class SftpDownloader extends FtpDownloader {
 
-    public SftpDownloader(String downloadURL, String outputFilePath, String user, String password) {
-        super(downloadURL, outputFilePath, user, password);
+    public SftpDownloader(FtpSource ftpSource) {
+        super(ftpSource);
     }
 
 //    public SftpDownloader(String downloadURL, String outputFilePath) {

@@ -53,6 +53,7 @@ public class DownloaderFactoryTest {
         // Arrange
         DownloaderFactory downloaderFactory = new DownloaderFactory();
         String outputDirectoryPath = "/Users/agoda/TestDownload";
+        String host = "localhost";
         String user = "agoda";
         String password = "1234";
 
@@ -60,6 +61,7 @@ public class DownloaderFactoryTest {
                 Protocol.FTP,
                 "ftp://other.file.com/other.txt",
                 Paths.get(outputDirectoryPath, "other.txt").toString(),
+                host,
                 user,
                 password);
 
@@ -76,6 +78,7 @@ public class DownloaderFactoryTest {
         // Arrange
         DownloaderFactory downloaderFactory = new DownloaderFactory();
         String outputDirectoryPath = "/Users/agoda/TestDownload";
+        String host = "localhost";
         String user = "agoda";
         String password = "1234";
 
@@ -83,6 +86,7 @@ public class DownloaderFactoryTest {
                 Protocol.SFTP,
                 "sftp://and.also.this/ending.txt",
                 Paths.get(outputDirectoryPath, "ending.txt").toString(),
+                host,
                 user,
                 password);
         // Act

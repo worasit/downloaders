@@ -1,6 +1,8 @@
 package com.agoda.downloaders;
 
 
+import com.agoda.source.Source;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,9 +15,9 @@ public abstract class Downloader implements Downloadable {
     protected String sourceURL;
     protected String outputFilePath;
 
-    public Downloader(String sourceURL, String outputFilePath) {
-        this.sourceURL = sourceURL;
-        this.outputFilePath = outputFilePath;
+    public Downloader(Source source) {
+        this.sourceURL = source.sourceURL;
+        this.outputFilePath = source.outputFilePath;
     }
 
     protected void writeDataFromChannel(ReadableByteChannel readableByteChannel, String outputFilePath, long contentLength) throws IOException {

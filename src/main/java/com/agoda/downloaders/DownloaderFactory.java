@@ -8,15 +8,15 @@ public class DownloaderFactory {
     public Downloadable getDownloader(Source source) throws TypeNotPresentException {
         switch (source.protocol) {
             case HTTP:
-                return new HttpDownloader(source.sourceURL, source.outputFilePath);
+                return new HttpDownloader(source);
             case HTTPS:
-                return new HttpsDownloader(source.sourceURL, source.outputFilePath);
+                return new HttpsDownloader(source);
             case FTP:
                 FtpSource ftpSource = (FtpSource) source;
-                return new FtpDownloader(ftpSource.sourceURL, ftpSource.outputFilePath, ftpSource.user, ftpSource.password);
+                return new FtpDownloader(ftpSource);
             case SFTP:
                 FtpSource sftpSource = (FtpSource) source;
-                return new SftpDownloader(sftpSource.sourceURL, sftpSource.outputFilePath, sftpSource.user, sftpSource.password);
+                return new SftpDownloader(sftpSource);
             default:
                 throw new TypeNotPresentException(Protocol.class.getTypeName(), new Throwable("Download protocol is not supported."));
         }

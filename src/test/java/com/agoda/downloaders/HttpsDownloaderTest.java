@@ -1,5 +1,6 @@
 package com.agoda.downloaders;
 
+import com.agoda.source.Source;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,9 +19,11 @@ public class HttpsDownloaderTest {
         HttpsDownloader httpsDownloader = null;
         String downloadURL = "https://other.file.com/other.txt";
         String outputFilePath = "other.txt";
+        Source source = new Source(Protocol.HTTPS, downloadURL, outputFilePath);
+
 
         // Act
-        httpsDownloader = new HttpsDownloader(downloadURL, outputFilePath);
+        httpsDownloader = new HttpsDownloader(source);
 
         // Assert
         Assert.assertTrue(httpsDownloader instanceof Downloader);
@@ -31,7 +34,8 @@ public class HttpsDownloaderTest {
         // Arrange
         String downloadURL = "https://other.file.com/other.txt";
         String outputFilePath = "other.txt";
-        HttpsDownloader httpsDownloader = spy(new HttpsDownloader(downloadURL, outputFilePath));
+        Source source = new Source(Protocol.HTTPS, downloadURL, outputFilePath);
+        HttpsDownloader httpsDownloader = spy(new HttpsDownloader(source));
 
         doNothing()
                 .when(httpsDownloader, "trustAllCertificate");

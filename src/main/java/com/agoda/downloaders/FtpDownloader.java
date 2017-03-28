@@ -1,6 +1,8 @@
 package com.agoda.downloaders;
 
 
+import com.agoda.source.FtpSource;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -10,13 +12,16 @@ import java.nio.channels.ReadableByteChannel;
 
 public class FtpDownloader extends Downloader {
 
+
+    protected String host;
     protected String user;
     protected String password;
 
-    public FtpDownloader(String downloadURL, String outputFilePath, String user, String password) {
-        super(downloadURL, outputFilePath);
-        this.user = user;
-        this.password = password;
+    public FtpDownloader(FtpSource ftpSource) {
+        super(ftpSource);
+        this.host = ftpSource.host;
+        this.user = ftpSource.user;
+        this.password = ftpSource.password;
     }
 
     @Override

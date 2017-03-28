@@ -1,0 +1,6 @@
+beaconaccount:
+  restart: always
+  build: .
+  container_name: container.beacon.account
+  hostname: docker.beacon.account
+  command: java -jar beacon-account-manager.jar api.dev.systemstatus.int.thomsonreuters.com 27017 etap webproxy.sng.corp.services

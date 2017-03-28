@@ -25,7 +25,29 @@ public class FtpDownloaderTest {
     }
 
     @Test
-    public void download() throws Exception {
+    public void download_shouldDownloadUsingURLConnection_ifURLFormatIncludeUserAndPassword() throws Exception {
+        // Arrange
+        FtpDownloader ftpDownloader = null;
+        String downloadURL = "ftp://agoda:1234@localhost/Users/worasitdaimongkol/FTP/captain.mkv";
+        String outputFilePath = "/Users/worasitdaimongkol/xxx/captain.mkv";
+        String host = "localhost";
+        String user = "agoda";
+        String password = "1234";
+        FtpSource ftpSource = new FtpSource(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
+
+        ftpDownloader = new FtpDownloader(ftpSource);
+
+        // Act
+//        ftpDownloader.download();
+
+
+        // Assert
+
+
+    }
+
+    @Test
+    public void download_shouldDownloadUsingFtpClient_ifURLFormatNotIncludeUserAndPassword() throws Exception {
         // Arrange
         FtpDownloader ftpDownloader = null;
         String downloadURL = "ftp://agoda:1234@localhost/Users/worasitdaimongkol/FTP/captain.mkv";

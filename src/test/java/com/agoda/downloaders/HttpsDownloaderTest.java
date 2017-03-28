@@ -21,7 +21,6 @@ public class HttpsDownloaderTest {
         String outputFilePath = "other.txt";
         Source source = new Source(Protocol.HTTPS, downloadURL, outputFilePath);
 
-
         // Act
         httpsDownloader = new HttpsDownloader(source);
 

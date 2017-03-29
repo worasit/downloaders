@@ -15,7 +15,7 @@ public class HttpDownloader extends Downloader {
 
     @Override
     public void download() throws IOException {
-        URLConnection urlConnection = getUrlConnection(this.sourceURL);
+        URLConnection urlConnection = getUrlConnection(this.getSource().getSourceURL());
         this.writeStreamData(urlConnection.getInputStream(), urlConnection.getContentLengthLong());
     }
 

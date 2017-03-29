@@ -12,17 +12,15 @@ import java.nio.channels.ReadableByteChannel;
 public abstract class Downloader implements Downloadable {
 
     protected static final int START_BUFFER_POSITION = 0;
-    protected String sourceURL;
-    protected String outputFilePath;
+    private Source source;
 
     public Downloader(Source source) {
-        this.sourceURL = source.sourceURL;
-        this.outputFilePath = source.outputFilePath;
+        this.source = source;
     }
 
     public void writeStreamData(InputStream inputStream, long contentLength) throws IOException {
         ReadableByteChannel readableByteChannel = establishChannel(inputStream);
-        writeDataFromChannel(readableByteChannel, this.outputFilePath, contentLength);
+        writeDataFromChannel(readableByteChannel, this.source.getOutputFilePath(), contentLength);
     }
 
     protected void writeDataFromChannel(ReadableByteChannel readableByteChannel, String outputFilePath, long contentLength) throws IOException {
@@ -33,6 +31,14 @@ public abstract class Downloader implements Downloadable {
 
     protected ReadableByteChannel establishChannel(InputStream inputStream) throws IOException {
         return Channels.newChannel(inputStream);
+    }
+
+    public Source getSource() {
+        return source;
+    }
+
+    public void setSource(Source source) {
+        this.source = source;
     }
 }
 

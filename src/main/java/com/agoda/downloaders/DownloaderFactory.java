@@ -1,22 +1,20 @@
 package com.agoda.downloaders;
 
 
-import com.agoda.source.FtpSource;
+
 import com.agoda.source.Source;
 
 public class DownloaderFactory {
     public Downloadable getDownloader(Source source) throws TypeNotPresentException {
-        switch (source.protocol) {
+        switch (source.getProtocol()) {
             case HTTP:
                 return new HttpDownloader(source);
             case HTTPS:
                 return new HttpsDownloader(source);
             case FTP:
-                FtpSource ftpSource = (FtpSource) source;
-                return new FtpDownloader(ftpSource);
+                return new FtpDownloader(source);
             case SFTP:
-                FtpSource sftpSource = (FtpSource) source;
-                return new SftpDownloader(sftpSource);
+                return new SftpDownloader(source);
             default:
                 throw new TypeNotPresentException(Protocol.class.getTypeName(), new Throwable("Download protocol is not supported."));
         }

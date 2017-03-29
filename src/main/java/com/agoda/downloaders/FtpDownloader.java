@@ -1,12 +1,9 @@
 package com.agoda.downloaders;
 
 
-import com.agoda.source.FtpSource;
+import com.agoda.source.Source;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
-import sun.net.ftp.FtpLoginException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,38 +14,30 @@ import java.text.MessageFormat;
 
 public class FtpDownloader extends Downloader {
 
-    protected String host;
-    protected String user;
-    protected String password;
 
-    public FtpDownloader(FtpSource ftpSource) {
-        super(ftpSource);
-        this.host = ftpSource.host;
-        this.user = ftpSource.user;
-        this.password = ftpSource.password;
+    public FtpDownloader(Source source) {
+        super(source);
     }
 
     @Override
     public void download() throws IOException, URISyntaxException, SftpException, JSchException {
-        if (!isAbleToDownloadViaURLConnection(this.sourceURL)) {
-            URI uri = new URI(this.sourceURL);
-            String hostWithUserAnadPassword = this.user + ":" + this.password + "@" + uri.getHost();
-            ((FtpDownloader) this).sourceURL.replaceAll(uri.getHost(), hostWithUserAnadPassword);
+
+        if (!isAbleToDownloadViaURLConnection(this.getSource().getSourceURL())) {
+
+            String newHostWithUserAndPassword = includeUserPasswordToFTPConnection(
+                    this.getSource().getUser(),
+                    this.getSource().getPassword(),
+                    this.getSource().getHost());
+
+            this.getSource().setHost(newHostWithUserAndPassword);
         }
-        downloadUsingURLConnection(this.sourceURL);
 
-
+        downloadUsingURLConnection(this.getSource().getSourceURL());
     }
 
-    protected FTPClient connectToFtpServer(String host, String user, String password) throws IOException {
-        FTPClient ftpClient = new FTPClient();
-        ftpClient.connect(host);
-        if (!ftpClient.login(user, password) || !FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
-            ftpClient.logout();
-            ftpClient.disconnect();
-            throw new FtpLoginException(MessageFormat.format("Cannot connect to host : {0}", host));
-        }
-        return ftpClient;
+    protected String includeUserPasswordToFTPConnection(String user, String password, String hostname) {
+        String hostWithUserAndPassword = MessageFormat.format("{0}:{1}@{2}", user, password, hostname);
+        return this.getSource().getSourceURL().replaceAll(this.getSource().getHost(), hostWithUserAndPassword);
     }
 
     protected boolean isAbleToDownloadViaURLConnection(String sourceURL) throws URISyntaxException {

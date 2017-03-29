@@ -1,6 +1,6 @@
 package com.agoda.downloaders;
 
-import com.agoda.source.FtpSource;
+import com.agoda.source.Source;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.Session;
 import org.junit.Assert;
@@ -30,10 +30,10 @@ public class SftpDownloaderTest {
         String host = "localhost";
         String user = "agoda";
         String password = "1234";
-        FtpSource sftpSource = new FtpSource(Protocol.SFTP, downloadURL, outputFilePath, host, user, password);
+        Source source = new Source(Protocol.SFTP, downloadURL, outputFilePath, host, user, password);
 
         // Act
-        sftpDownloader = new SftpDownloader(sftpSource);
+        sftpDownloader = new SftpDownloader(source);
 
         // Assert
         Assert.assertTrue(sftpDownloader instanceof Downloader);
@@ -47,8 +47,8 @@ public class SftpDownloaderTest {
         String host = "localhost";
         String user = "agoda";
         String password = "1234";
-        FtpSource sftpSource = new FtpSource(Protocol.SFTP, downloadURL, outputFilePath, host, user, password);
-        SftpDownloader sftpDownloader = spy(new SftpDownloader(sftpSource));
+        Source sSource = new Source(Protocol.SFTP, downloadURL, outputFilePath, host, user, password);
+        SftpDownloader sftpDownloader = spy(new SftpDownloader(sSource));
 
         Properties mockConfig = mock(Properties.class);
         Session mockSession = mock(Session.class);

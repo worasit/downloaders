@@ -1,5 +1,6 @@
 package com.agoda.downloaders;
 
+import com.agoda.source.Source;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -15,11 +16,11 @@ public class DownloaderTest {
     @Test
     public void writeStreamData() throws Exception {
         // Arrange
-
         long expectedContentLength = Long.MAX_VALUE;
         String expectedOutputFilePath = "/User/path/fake.txt";
         Downloader downloader = Mockito.mock(Downloader.class, Mockito.CALLS_REAL_METHODS);
-        downloader.outputFilePath = expectedOutputFilePath;
+        Source fakeSource = new Source(Protocol.FTP, "ftp://fakeUser:fakePassword@localhost.com/myfile.txt", expectedOutputFilePath, "localhost.com", "fakeuser", "fakepassword");
+        downloader.setSource(fakeSource);
 
         InputStream inputStream = Mockito.mock(InputStream.class);
         ReadableByteChannel readableByteChannel = Mockito.mock(ReadableByteChannel.class);

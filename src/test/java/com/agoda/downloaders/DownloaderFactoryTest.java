@@ -1,6 +1,5 @@
 package com.agoda.downloaders;
 
-import com.agoda.source.FtpSource;
 import com.agoda.source.Source;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class DownloaderFactoryTest {
         Source fakeSource = new Source(
                 Protocol.HTTP,
                 "http://my.file.com/file.txt",
-                Paths.get(outputDirectoryPath, "file.txt").toString());
+                Paths.get(outputDirectoryPath, "file.txt").toString(), "my.file.com", null, null);
 
         // Act
         Downloadable downloader = downloaderFactory.getDownloader(fakeSource);
@@ -38,7 +37,7 @@ public class DownloaderFactoryTest {
         Source fakeSource = new Source(
                 Protocol.HTTPS,
                 "https://my.file.com/file.txt",
-                Paths.get(outputDirectoryPath, "file.txt").toString());
+                Paths.get(outputDirectoryPath, "file.txt").toString(), "my.file.com", null, null);
 
         // Act
         Downloadable downloader = downloaderFactory.getDownloader(fakeSource);
@@ -57,7 +56,7 @@ public class DownloaderFactoryTest {
         String user = "agoda";
         String password = "1234";
 
-        Source fakeSource = new FtpSource(
+        Source fakeSource = new Source(
                 Protocol.FTP,
                 "ftp://other.file.com/other.txt",
                 Paths.get(outputDirectoryPath, "other.txt").toString(),
@@ -82,7 +81,7 @@ public class DownloaderFactoryTest {
         String user = "agoda";
         String password = "1234";
 
-        Source fakeSource = new FtpSource(
+        Source fakeSource = new Source(
                 Protocol.SFTP,
                 "sftp://and.also.this/ending.txt",
                 Paths.get(outputDirectoryPath, "ending.txt").toString(),

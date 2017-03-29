@@ -1,16 +1,11 @@
 package com.agoda.downloaders;
 
-import com.agoda.source.FtpSource;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
+import com.agoda.source.Source;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.net.URI;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -28,10 +23,10 @@ public class FtpDownloaderTest {
         String host = "localhost";
         String user = "agoda";
         String password = "1234";
-        FtpSource ftpSource = new FtpSource(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
+        Source source = new Source(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
 
         // Act
-        ftpDownloader = new FtpDownloader(ftpSource);
+        ftpDownloader = new FtpDownloader(source);
 
         // Assert
         Assert.assertTrue(ftpDownloader instanceof Downloader);
@@ -45,8 +40,8 @@ public class FtpDownloaderTest {
         String host = "localhost";
         String user = "agoda";
         String password = "1234";
-        FtpSource ftpSource = new FtpSource(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
-        FtpDownloader ftpDownloader = spy(new FtpDownloader(ftpSource));
+        Source source = new Source(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
+        FtpDownloader ftpDownloader = spy(new FtpDownloader(source));
 
         doReturn(true)
                 .when(ftpDownloader)
@@ -73,8 +68,8 @@ public class FtpDownloaderTest {
         String host = "localhost";
         String user = "agoda";
         String password = "1234";
-        FtpSource ftpSource = new FtpSource(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
-        FtpDownloader ftpDownloader = spy(new FtpDownloader(ftpSource));
+        Source source = new Source(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
+        FtpDownloader ftpDownloader = spy(new FtpDownloader(source));
 
 //        doReturn(false)
 //                .when(ftpDownloader)
@@ -84,7 +79,7 @@ public class FtpDownloaderTest {
 //                .downloadUsingURLConnection(anyString());
 
         // Act
-        ftpDownloader.download();
+//        ftpDownloader.download();
 
         // Assert
 //        verifyPrivate(ftpDownloader, times(1))

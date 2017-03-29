@@ -19,7 +19,7 @@ public class HttpsDownloaderTest {
         HttpsDownloader httpsDownloader = null;
         String downloadURL = "https://other.file.com/other.txt";
         String outputFilePath = "other.txt";
-        Source source = new Source(Protocol.HTTPS, downloadURL, outputFilePath);
+        Source source = new Source(Protocol.HTTPS, downloadURL, outputFilePath, "other.file.com", null, null);
 
         // Act
         httpsDownloader = new HttpsDownloader(source);
@@ -33,7 +33,7 @@ public class HttpsDownloaderTest {
         // Arrange
         String downloadURL = "https://other.file.com/other.txt";
         String outputFilePath = "other.txt";
-        Source source = new Source(Protocol.HTTPS, downloadURL, outputFilePath);
+        Source source = new Source(Protocol.HTTPS, downloadURL, outputFilePath, "other.file.com", null, null);
         HttpsDownloader httpsDownloader = spy(new HttpsDownloader(source));
 
         doNothing()

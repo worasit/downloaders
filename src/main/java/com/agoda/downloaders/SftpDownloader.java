@@ -1,12 +1,11 @@
 package com.agoda.downloaders;
 
 
-import com.agoda.source.FtpSource;
+import com.agoda.source.Source;
 import com.jcraft.jsch.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
@@ -14,7 +13,7 @@ public class SftpDownloader extends FtpDownloader {
 
     private static final int SFTP_PORT = 22;
 
-    public SftpDownloader(FtpSource source) {
+    public SftpDownloader(Source source) {
         super(source);
     }
 
@@ -40,8 +39,7 @@ public class SftpDownloader extends FtpDownloader {
     }
 
     private InputStream getInputStream(ChannelSftp channelSftp) throws URISyntaxException, SftpException {
-        URI uri = new URI(this.sourceURL);
-        return channelSftp.get(uri.getPath());
+        return channelSftp.get(this.getSource().getUri().getPath());
     }
 
     private ChannelSftp establishSftpChannel(Session session) throws JSchException {
@@ -52,8 +50,8 @@ public class SftpDownloader extends FtpDownloader {
 
     private Session establishSession(Properties config) throws JSchException {
         JSch jsch = new JSch();
-        Session session = jsch.getSession(this.user, this.host, SFTP_PORT);
-        session.setPassword(this.password);
+        Session session = jsch.getSession(this.getSource().getUser(), this.getSource().getHost(), SFTP_PORT);
+        session.setPassword(this.getSource().getPassword());
         session.setConfig(config);
         session.connect();
         return session;

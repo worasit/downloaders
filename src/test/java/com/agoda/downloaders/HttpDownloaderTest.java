@@ -26,7 +26,7 @@ public class HttpDownloaderTest {
         HttpDownloader httpDownloader = null;
         String downloadURL = "http://my.file.com/file.txt";
         String outputFilePath = "file.txt";
-        Source source = new Source(Protocol.HTTP, downloadURL, outputFilePath);
+        Source source = new Source(Protocol.HTTP, downloadURL, outputFilePath, "my.file.com", null, null);
 
         // Act
         httpDownloader = new HttpDownloader(source);
@@ -41,7 +41,7 @@ public class HttpDownloaderTest {
         String downloadURL = "http://my.file.com/file.txt";
         String outputFilePath = "file.txt";
         long contentLength = Long.MAX_VALUE;
-        Source source = new Source(Protocol.HTTP, downloadURL, outputFilePath);
+        Source source = new Source(Protocol.HTTP, downloadURL, outputFilePath, "my.file.com", null, null);
 
 
         HttpDownloader httpDownloader = spy(new HttpDownloader(source));

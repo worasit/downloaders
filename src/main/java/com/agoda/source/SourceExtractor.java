@@ -47,13 +47,13 @@ public class SourceExtractor {
 
         switch (protocol) {
             case "http":
-                return new Source(Protocol.HTTP, sourceURL, outputFilePath);
+                return new Source(Protocol.HTTP, sourceURL, outputFilePath, host, null, null);
             case "https":
-                return new Source(Protocol.HTTPS, sourceURL, outputFilePath);
+                return new Source(Protocol.HTTPS, sourceURL, outputFilePath, host, null, null);
             case "ftp":
-                return new FtpSource(Protocol.FTP, sourceURL, outputFilePath, host, getUser(userInfo, ftpUser), getPassword(userInfo, ftpPassword));
+                return new Source(Protocol.FTP, sourceURL, outputFilePath, host, getUser(userInfo, ftpUser), getPassword(userInfo, ftpPassword));
             case "sftp":
-                return new FtpSource(Protocol.SFTP, sourceURL, outputFilePath, host, getUser(userInfo, sftpUser), getPassword(userInfo, sftpPassword));
+                return new Source(Protocol.SFTP, sourceURL, outputFilePath, host, getUser(userInfo, sftpUser), getPassword(userInfo, sftpPassword));
             default:
                 throw new EnumConstantNotPresentException(Protocol.class, protocol);
         }

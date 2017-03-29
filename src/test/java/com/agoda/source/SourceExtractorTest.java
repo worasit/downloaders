@@ -27,14 +27,14 @@ public class SourceExtractorTest {
         Source expectedHttpSource = new Source(
                 Protocol.HTTP,
                 "http://my.file.com/file.txt",
-                Paths.get(outputDirectoryPath, "file.txt").toString());
+                Paths.get(outputDirectoryPath, "file.txt").toString(), "my.file.com", null, null);
 
         Source expectedHttpsSource = new Source(
                 Protocol.HTTPS,
                 "https://and.also.this.https/fake.txt",
-                Paths.get(outputDirectoryPath, "fake.txt").toString());
+                Paths.get(outputDirectoryPath, "fake.txt").toString(), "and.also.this.https", null, null);
 
-        FtpSource expectedFtpSource = new FtpSource(
+        Source expectedFtpSource = new Source(
                 Protocol.FTP,
                 "ftp://other.file.com/other.txt",
                 Paths.get(outputDirectoryPath, "other.txt").toString(),
@@ -42,7 +42,7 @@ public class SourceExtractorTest {
                 ftpUser,
                 ftpPassword);
 
-        FtpSource expectedFtpSourceWithUserAndPasswordFormat = new FtpSource(
+        Source expectedFtpSourceWithUserAndPasswordFormat = new Source(
                 Protocol.FTP,
                 "ftp://fakeUser:fakePassword@google.com/fake.txt",
                 Paths.get(outputDirectoryPath, "fake.txt").toString(),
@@ -50,7 +50,7 @@ public class SourceExtractorTest {
                 "fakeUser",
                 "fakePassword");
 
-        FtpSource expectedSftpSource = new FtpSource(
+        Source expectedSftpSource = new Source(
                 Protocol.SFTP,
                 "sftp://and.also.this/ending.txt",
                 Paths.get(outputDirectoryPath, "ending.txt").toString(),

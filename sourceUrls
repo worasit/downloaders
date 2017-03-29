@@ -1,3 +1,17 @@
 https://static.pexels.com/photos/3247/nature-forest-industry-rails.jpg,
 http://localhost:8080/captain.mkv,
 ftp://agoda:1234@localhost/Users/worasitdaimongkol/FTP/captain.mkv
+
+
+--sources
+"https://static.pexels.com/photos/3247/nature-forest-industry-rails.jpg,http://localhost:8080/captain.mkv"
+--out
+"/Users/worasitdaimongkol/xxx"
+--ftpUser
+"agoda"
+--ftpPassword
+"1234"
+--sftpUser
+"agoda"
+--sftpPassword
+"1234"

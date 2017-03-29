@@ -24,3 +24,6 @@ sftp : http://stackoverflow.com/questions/14617/how-to-retrieve-a-file-from-a-se
        http://tutorials.jenkov.com/java-nio/buffers.html
        http://stackoverflow.com/questions/236861/how-do-you-determine-the-ideal-buffer-size-when-using-fileinputstream
        http://jcommander.org -> CLI application for JAVA
+
+       // Thread management
+       http://crunchify.com/how-to-run-multiple-threads-concurrently-in-java-executorservice-approach/

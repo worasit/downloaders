@@ -70,7 +70,7 @@ public class FtpDownloaderTest {
         String host = "localhost";
         String ftpUser = "agoda";
         String ftpPassword = "1234";
-        String hostIncludeUserPassword = MessageFormat.format("{0}:{1}@{2}", ftpUser, ftpPassword, host);
+        String hostIncludeUserPassword = MessageFormat.format("ftp://{0}:{1}@localhost/captain.mkv", ftpUser, ftpPassword);
         Source source = new Source(Protocol.FTP, downloadURL, outputFilePath, host, ftpUser, ftpPassword);
         FtpDownloader ftpDownloader = spy(new FtpDownloader(source));
 
@@ -93,7 +93,7 @@ public class FtpDownloaderTest {
         verifyPrivate(ftpDownloader, times(1))
                 .invoke("includeUserPasswordToFTPConnection", ftpUser, ftpPassword, host);
         verifyPrivate(ftpDownloader, times(1))
-                .invoke("downloadUsingURLConnection", downloadURL);
+                .invoke("downloadUsingURLConnection", hostIncludeUserPassword);
     }
 
 }

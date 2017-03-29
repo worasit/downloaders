@@ -29,7 +29,7 @@ public class FtpDownloader extends Downloader {
                     this.getSource().getPassword(),
                     this.getSource().getHost());
 
-            this.getSource().setHost(newHostWithUserAndPassword);
+            this.getSource().setSourceURL(newHostWithUserAndPassword);
         }
 
         downloadUsingURLConnection(this.getSource().getSourceURL());

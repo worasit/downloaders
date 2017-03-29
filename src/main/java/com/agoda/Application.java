@@ -1,21 +1,19 @@
 package com.agoda;
 
-import com.agoda.downloaders.Downloadable;
+import com.agoda.downloaders.Downloader;
 import com.agoda.downloaders.DownloaderFactory;
 import com.agoda.source.Source;
 import com.agoda.source.SourceExtractor;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Application {
 
+    public static final int MAX_THREADS = 4;
     @Parameter(names = "--help", help = true)
     private boolean help;
     @Parameter(names = {"--sources"}, required = true, description = "Comma-separated list of sources URLs to be run (e.g. http://my.file.com/file,ftp://other.file.com/other,sftp://and.also.this/ending,sftp://fakeUser:fakePassword@google.com/test.txt)")
@@ -37,7 +35,8 @@ public class Application {
         application.run(jCommander);
     }
 
-    public void run(JCommander jCommander) throws MalformedURLException, URISyntaxException {
+    public void run(JCommander jCommander) throws Exception {
+
 
         if (this.help) {
             jCommander.usage();
@@ -46,19 +45,12 @@ public class Application {
 
         List<Source> sources = SourceExtractor.extract(sourcesURLs, outputDirectoryPath, ftpUser, ftpPassword, sftpUser, sftpPassword);
         DownloaderFactory downloaderFactory = new DownloaderFactory();
+        ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
         for (Source source : sources) {
-
-            Downloadable downloader = downloaderFactory.getDownloader(source);
-
-            new Thread(() -> {
-                try {
-                    downloader.download();
-                } catch (IOException | JSchException | URISyntaxException | SftpException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
+            Downloader downloader = (Downloader) downloaderFactory.getDownloader(source);
+            executorService.submit(downloader);
         }
+        
     }
 }

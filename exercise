@@ -27,3 +27,4 @@ sftp : http://stackoverflow.com/questions/14617/how-to-retrieve-a-file-from-a-se
 
        // Thread management
        http://crunchify.com/how-to-run-multiple-threads-concurrently-in-java-executorservice-approach/
+       http://www.journaldev.com/1090/java-callable-future-example

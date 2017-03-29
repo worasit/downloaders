@@ -11,20 +11,3 @@ in your code, please consider:
 4.some sources might fail in the middle of download
 5.we don't want to have partial data in the final location in any case.
 You can implement the code Scala or Java and also include tests.
-
-http : http://www.codejava.net/java-se/networking/use-httpurlconnection-to-download-file-from-an-http-url
-ftp  : http://www.codejava.net/java-se/networking/ftp/java-ftp-file-download-tutorial-and-example
-       http://www.iamrohit.in/create-ftp-server-using-nodejs/
-sftp : http://stackoverflow.com/questions/14617/how-to-retrieve-a-file-from-a-server-via-sftp
-       https://kodehelp.com/java-program-for-downloading-file-from-sftp-server/
-
-
-
-       http://www.baeldung.com/java-read-lines-large-file
-       http://tutorials.jenkov.com/java-nio/buffers.html
-       http://stackoverflow.com/questions/236861/how-do-you-determine-the-ideal-buffer-size-when-using-fileinputstream
-       http://jcommander.org -> CLI application for JAVA
-
-       // Thread management
-       http://crunchify.com/how-to-run-multiple-threads-concurrently-in-java-executorservice-approach/
-       http://www.journaldev.com/1090/java-callable-future-example

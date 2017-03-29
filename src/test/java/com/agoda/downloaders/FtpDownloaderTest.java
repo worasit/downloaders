@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.text.MessageFormat;
+
 import static org.mockito.Matchers.anyString;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.powermock.api.mockito.PowerMockito.*;
@@ -68,24 +70,30 @@ public class FtpDownloaderTest {
         String host = "localhost";
         String user = "agoda";
         String password = "1234";
+        String hostIncludeUserPassword = MessageFormat.format("{0}:{1}@{2}", user, password, host);
         Source source = new Source(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
         FtpDownloader ftpDownloader = spy(new FtpDownloader(source));
 
-//        doReturn(false)
-//                .when(ftpDownloader)
-//                .isAbleToDownloadViaURLConnection(anyString());
-//        doNothing()
-//                .when(ftpDownloader)
-//                .downloadUsingURLConnection(anyString());
+        doReturn(false)
+                .when(ftpDownloader)
+                .isAbleToDownloadViaURLConnection(anyString());
+        doNothing()
+                .when(ftpDownloader)
+                .downloadUsingURLConnection(anyString());
+        doReturn(hostIncludeUserPassword)
+                .when(ftpDownloader)
+                .includeUserPasswordToFTPConnection(anyString(), anyString(), anyString());
 
         // Act
-//        ftpDownloader.download();
+        ftpDownloader.download();
 
         // Assert
-//        verifyPrivate(ftpDownloader, times(1))
-//                .invoke("isAbleToDownloadViaURLConnection", downloadURL);
-//        verifyPrivate(ftpDownloader, times(0))
-//                .invoke("downloadUsingURLConnection", downloadURL);
+        verifyPrivate(ftpDownloader, times(1))
+                .invoke("isAbleToDownloadViaURLConnection", downloadURL);
+        verifyPrivate(ftpDownloader, times(1))
+                .invoke("includeUserPasswordToFTPConnection", user, password, host);
+        verifyPrivate(ftpDownloader, times(1))
+                .invoke("downloadUsingURLConnection", downloadURL);
     }
 
 }

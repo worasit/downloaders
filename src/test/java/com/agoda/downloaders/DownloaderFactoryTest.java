@@ -28,7 +28,7 @@ public class DownloaderFactoryTest {
     }
 
     @Test
-    public void getDownloader_returnHttpDownloader_ifSourceIsHttps() throws Exception {
+    public void getDownloader_returnHttpsDownloader_ifSourceIsHttps() throws Exception {
 
         // Arrange
         DownloaderFactory downloaderFactory = new DownloaderFactory();

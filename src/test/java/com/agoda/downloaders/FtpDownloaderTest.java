@@ -63,15 +63,15 @@ public class FtpDownloaderTest {
     }
 
     @Test
-    public void download_shouldDownloadUsingFtpClient_ifURLFormatNotIncludeUserAndPassword() throws Exception {
+    public void download_shouldIncludeUserAndPasswordFromUserInput_ifURLFormatNotIncludeUserAndPassword() throws Exception {
         // Arrange
         String downloadURL = "ftp://localhost/captain.mkv";
         String outputFilePath = "/Users/worasitdaimongkol/xxx/captain.mkv";
         String host = "localhost";
-        String user = "agoda";
-        String password = "1234";
-        String hostIncludeUserPassword = MessageFormat.format("{0}:{1}@{2}", user, password, host);
-        Source source = new Source(Protocol.FTP, downloadURL, outputFilePath, host, user, password);
+        String ftpUser = "agoda";
+        String ftpPassword = "1234";
+        String hostIncludeUserPassword = MessageFormat.format("{0}:{1}@{2}", ftpUser, ftpPassword, host);
+        Source source = new Source(Protocol.FTP, downloadURL, outputFilePath, host, ftpUser, ftpPassword);
         FtpDownloader ftpDownloader = spy(new FtpDownloader(source));
 
         doReturn(false)
@@ -91,7 +91,7 @@ public class FtpDownloaderTest {
         verifyPrivate(ftpDownloader, times(1))
                 .invoke("isAbleToDownloadViaURLConnection", downloadURL);
         verifyPrivate(ftpDownloader, times(1))
-                .invoke("includeUserPasswordToFTPConnection", user, password, host);
+                .invoke("includeUserPasswordToFTPConnection", ftpUser, ftpPassword, host);
         verifyPrivate(ftpDownloader, times(1))
                 .invoke("downloadUsingURLConnection", downloadURL);
     }

@@ -42,7 +42,6 @@ jar {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
     baseName 'agoda-downloader'
-    version = '0.1.0'
 }
 
 

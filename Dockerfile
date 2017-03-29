@@ -1,4 +1,4 @@
 FROM openjdk:8
 
-COPY ./build/libs/beacon-account-manager.jar /usr/src/myapp/beacon-account-manager.jar
+COPY ./build/libs/agoda-downloader.jar /usr/src/myapp/agoda-downloader.jar
 WORKDIR /usr/src/myapp

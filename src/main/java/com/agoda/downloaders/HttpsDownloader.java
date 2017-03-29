@@ -7,6 +7,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -56,5 +58,13 @@ public class HttpsDownloader extends HttpDownloader {
                     }
                 }
         };
+    }
+
+    @Override
+    protected URLConnection getUrlConnection(String downloadURL) throws IOException {
+        URL url = new URL(downloadURL);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "");
+        return urlConnection;
     }
 }

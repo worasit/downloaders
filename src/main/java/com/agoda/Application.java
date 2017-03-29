@@ -7,9 +7,12 @@ import com.agoda.source.SourceExtractor;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 public class Application {
 
@@ -37,7 +40,6 @@ public class Application {
 
     public void run(JCommander jCommander) throws Exception {
 
-
         if (this.help) {
             jCommander.usage();
             return;
@@ -46,11 +48,17 @@ public class Application {
         List<Source> sources = SourceExtractor.extract(sourcesURLs, outputDirectoryPath, ftpUser, ftpPassword, sftpUser, sftpPassword);
         DownloaderFactory downloaderFactory = new DownloaderFactory();
         ExecutorService executorService = Executors.newFixedThreadPool(MAX_THREADS);
+        List<Callable<Boolean>> downloadWorkers = new ArrayList<>();
 
         for (Source source : sources) {
             Downloader downloader = (Downloader) downloaderFactory.getDownloader(source);
-            executorService.submit(downloader);
+            downloadWorkers.add(downloader);
         }
-        
+        try {
+            executorService.invokeAll(downloadWorkers);
+            Logger.getLogger(Application.class.getSimpleName()).info("All download tasks are finished.");
+        } finally {
+            System.exit(1);
+        }
     }
 }

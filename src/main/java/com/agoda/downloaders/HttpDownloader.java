@@ -19,10 +19,9 @@ public class HttpDownloader extends Downloader {
         this.writeStreamData(urlConnection.getInputStream(), urlConnection.getContentLengthLong());
     }
 
-    private URLConnection getUrlConnection(String downloadURL) throws IOException {
+    protected URLConnection getUrlConnection(String downloadURL) throws IOException {
         URL url = new URL(downloadURL);
         URLConnection urlConnection = url.openConnection();
-        urlConnection.setRequestProperty("User-Agent", "");
         return urlConnection;
     }
 }

@@ -30,7 +30,7 @@ public abstract class Downloader implements Downloadable, Callable<Boolean> {
             download();
         } catch (Exception e) {
             logger.severe(MessageFormat.format("Failed to download : {0} error msg: {1}", this.getSource().getSourceURL(), e.getMessage()));
-            return false;
+            throw e;
         }
         logger.info(MessageFormat.format("Finished download : {0}, the file is saved to {1}", this.getSource().getSourceURL(), this.getSource().getOutputFilePath()));
         return true;
@@ -58,5 +58,6 @@ public abstract class Downloader implements Downloadable, Callable<Boolean> {
     public void setSource(Source source) {
         this.source = source;
     }
+
 }
 

@@ -2,6 +2,7 @@ package com.agoda.source;
 
 
 import com.agoda.downloaders.Protocol;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -11,6 +12,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SourceExtractor {
 
@@ -41,7 +44,7 @@ public class SourceExtractor {
 
         URI uri = new URI(sourceURL);
         String protocol = uri.getScheme();
-        String outputFilePath = getOutputFilePath(localOutputDirectory, uri.getPath());
+        String outputFilePath = getOutputFilePath(localOutputDirectory, sourceURL);
         String host = uri.getHost();
         String userInfo = uri.getUserInfo();
 
@@ -82,7 +85,8 @@ public class SourceExtractor {
     }
 
     private static String beautifyOutputFilename(String filePath) {
-        String outputFile = filePath.replace('/', '-').replaceAll(" ", "");
+
+        String outputFile = filePath.substring(filePath.lastIndexOf('/') + 1);
         if (outputFile.charAt(0) == '-') {
             outputFile = outputFile.substring(1);
         }

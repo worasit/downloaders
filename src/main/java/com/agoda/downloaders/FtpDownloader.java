@@ -4,14 +4,11 @@ package com.agoda.downloaders;
 import com.agoda.source.FtpSource;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import sun.net.ftp.FtpLoginException;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -33,17 +30,13 @@ public class FtpDownloader extends Downloader {
 
     @Override
     public void download() throws IOException, URISyntaxException, SftpException, JSchException {
-        if (isAbleToDownloadViaURLConnection(this.sourceURL)) {
-            downloadUsingURLConnection(this.sourceURL);
-        } else {
-
-            FTPClient ftpClient = connectToFtpServer(this.host, this.user, this.password);
+        if (!isAbleToDownloadViaURLConnection(this.sourceURL)) {
             URI uri = new URI(this.sourceURL);
-            ftpClient.enterLocalPassiveMode();
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-            InputStream inputStream = ftpClient.retrieveFileStream(uri.getPath());
-            this.writeStreamData(inputStream, Long.MAX_VALUE);
+            String hostWithUserAnadPassword = this.user + ":" + this.password + "@" + uri.getHost();
+            ((FtpDownloader) this).sourceURL.replaceAll(uri.getHost(), hostWithUserAnadPassword);
         }
+        downloadUsingURLConnection(this.sourceURL);
+
 
     }
 

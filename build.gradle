@@ -17,6 +17,7 @@ dependencies {
     compile "com.beust:jcommander:1.48"
 }
 
+
 test {
     useJUnit()
     testLogging.showStandardStreams = true
